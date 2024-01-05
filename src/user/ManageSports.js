@@ -1,29 +1,14 @@
-import React from 'react'
+import LogOut from '../LogOut'
 import { app } from '../firebase'
-import { database } from '../firebase'
-import { collection, addDoc } from 'firebase/firestore'
-import { useState } from 'react'
-
-function ManageSports() {
-  const [sport , setSport] = useState({})
-  const collectionRef = collection(database, 'userSportsManage')
-  const handleInput=()=>{
-    
-  }
-  const handleAdd=async()=>{
-  await addDoc(collectionRef, {
-    sportsName: sport
-  })
-  }
-
+// import { Link } from 'react-router-dom'
+import React from 'react'
+function ManageSports () {
   return (
     <div>
-      Manage Sports <br />
-      <input type="text" onClick={handleInput}/>
-      <button onClick={()=>handleAdd}>Add Sports</button>
-      <button>Delete Sports</button>
+      Manage Sports
+      <LogOut/>
+      {/* <button><Link to='/logout'>Log Out</Link></button> */}
     </div>
   )
 }
-
 export default ManageSports

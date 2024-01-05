@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import AdminDashboard from "./AdminDashboard";
 export default function AdminLogin() {
     const auth = getAuth();
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const [data, setData] = useState({})
     const [user, setUser] = useState(null)
     const handleInput=(event)=>{
@@ -15,9 +15,9 @@ export default function AdminLogin() {
     const handleLogin=()=>{
          signInWithEmailAndPassword(auth, data.email, data.password)
         .then((response)=>{
-            alert(response.user)
+            alert("Logged In Successfully")
             setUser(response.user)
-            // navigate('/myprofile')
+            navigate('/admin/dashboard')
         })
         .catch((err)=>{
             alert(err.message)
@@ -44,21 +44,19 @@ export default function AdminLogin() {
         <div>
             {user ? (
             <>
-            <AdminDashboard
-            uid={user.uid}
-            user={user.email}
-            // emailStatus={user.emailVerified}
-            />
+            <AdminDashboard/>
             </>) 
             : ( 
                 <div>
-            <h3>Login</h3>
+            <h3>Admin Login</h3>
             <input type="email" name="email" placeholder="email"  onChange={(event)=>handleInput(event)} />
             <input type="password" name="password" placeholder="password"  onChange={(event)=>handleInput(event)} />
             <button onClick={handleLogin}>Login</button>
-            <p>Don't have account?</p>
-            <span><Link to='/user/registration'>Register</Link></span>
-            {/* <p id="userEmailVerification"></p> */}
+
+            {/* Admin Registratioon, uncomment for registering it as admin */}
+            {/* <p>Don't have account?</p>
+            <span><Link to='/user/registration'>Register</Link></span> */}
+
             </div>)
         }
         </div>

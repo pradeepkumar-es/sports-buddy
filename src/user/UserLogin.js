@@ -6,7 +6,7 @@ import ManageSports from "./ManageSports";
 import LogOut from "../LogOut";
 export default function UserLogin() {
     const auth = getAuth();
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const [data, setData] = useState({})
     const [user, setUser] = useState(null)
     const handleInput=(event)=>{
@@ -16,9 +16,9 @@ export default function UserLogin() {
     const handleLogin=()=>{
          signInWithEmailAndPassword(auth, data.email, data.password)
         .then((response)=>{
-            alert(response.user)
+            alert("Logged In Successfully")
             setUser(response.user)
-            // navigate('/myprofile')
+            navigate('/user/managesports')
         })
         .catch((err)=>{
             alert(err.message)
@@ -32,6 +32,7 @@ export default function UserLogin() {
     if(user){
         // alert("You are Logged In")
         setUser(user)
+        navigate('/user/managesports')
     }else {
         // alert("You are Logged Out")
         setUser(null)
@@ -45,16 +46,11 @@ export default function UserLogin() {
         <div>
             {user ? (
             <>
-            <ManageSports
-            uid={user.uid}
-            user={user.email}
-            // emailStatus={user.emailVerified}
-            />
-            <LogOut/>
+            <ManageSports/>
             </>) 
             : ( 
                 <div>
-            <h3>Login</h3>
+            <h3>User's Login</h3>
             <input type="email" name="email" placeholder="email"  onChange={(event)=>handleInput(event)} />
             <input type="password" name="password" placeholder="password"  onChange={(event)=>handleInput(event)} />
             <button onClick={handleLogin}>Login</button>
