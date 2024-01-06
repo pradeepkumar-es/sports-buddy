@@ -28,3 +28,14 @@
 button{
   cursor: pointer;
 }
+.admin-data{
+  display: flex;
+  flex-direction: row;
+  border: #61dafb 1px solid;
+  margin: 5px;
+  padding: 5px;
+}
+.admin-data p {
+  border: solid 1px #61dafb;
+  padding: 10px;
+}
