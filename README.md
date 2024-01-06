@@ -27,5 +27,9 @@ It correctly bundles React in production mode and optimizes the build for the be
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
+### deployement
+I have deployed my app on Netlify using automatic deployement from github code, i.e. whenever i update my github repository then change will reflect in website. below is the link of my website
+( https://main--luminous-naiad-365f12.netlify.app/ )
+
 ### for Admin check the functionality by using email: admin@gmail.com amd password: 123456 in admin login.
 ### for user, register first and do rest.
