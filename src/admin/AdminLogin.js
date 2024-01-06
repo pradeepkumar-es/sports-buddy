@@ -40,6 +40,14 @@ export default function AdminLogin() {
 //    return ()=>userAuth(); 
     }
    ,[])
+
+   //login help for checking admin dashboard
+   const loginHelp=()=>{
+    alert(`
+    Note: For Checking admin dashboard purpose
+    email: admin@gmail.com
+    password: 123456`)
+   }
     return (
         <div>
             {user ? (
@@ -52,6 +60,7 @@ export default function AdminLogin() {
             <input type="email" name="email" placeholder="email"  onChange={(event)=>handleInput(event)} />
             <input type="password" name="password" placeholder="password"  onChange={(event)=>handleInput(event)} />
             <button onClick={handleLogin}>Login</button>
+            <p className="admin-login-help" onClick={loginHelp}>Login Help</p>
 
             {/* Admin Registratioon, uncomment for registering it as admin */}
             {/* <p>Don't have account?</p>

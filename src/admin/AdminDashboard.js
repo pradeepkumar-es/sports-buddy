@@ -5,7 +5,8 @@ import { addDoc,
         collection,
         deleteDoc,
         doc,
-        onSnapshot } from 'firebase/firestore'
+        onSnapshot, 
+        updateDoc} from 'firebase/firestore'
 
 function AdminDashboard() {
   const [adminData, setAdminData] = useState({}) //defining state variable adminData for storing input data
@@ -58,9 +59,26 @@ const handleDelete=(id)=>{
   })
 }
 
+//updating data upon user click and input
+const handleUpdate=(id)=>{
+  const docToUpdate = doc(database, 'Admin Data', id)
+  updateDoc(docToUpdate, {
+    SportName: adminData.sport,
+     Area : adminData.area,
+     City: adminData.city,
+     SportCategory : adminData.sportCategory
+  })
+  .then(()=>{
+    alert('Sport Data Updated Successfully')
+  })
+  .catch((err)=>{
+    alert(err.message)
+  })
+}
   return (
     <div>
-      <h3>Admin DashBoard</h3>
+      <h3>Admin Dashboard</h3>
+      <div className="adminInput">
       <label htmlFor='addSport'>Sport:</label>
       <input name='sport' type="text" id='addSport' onChange={handleInput}/>
       <label htmlFor="area">Area:</label>
@@ -69,17 +87,22 @@ const handleDelete=(id)=>{
       <input name='city' type="text" id='city' onChange={handleInput}/>
       <label htmlFor="sportCategory">Sport Category: </label>
       <input name='sportCategory' type="text" id='sportCategory'onChange={handleInput}/>
-      <button onClick={handleSubmit}>Submit</button>
+      <button onClick={handleSubmit}>Add Sport Data</button>
+      </div>
+      {firebaseData?<p className='note'>*To update, First fill your data in your input field then click update button that you want to update!</p>
+      : <p>No Data Found</p>}
       {
-        firebaseData ? (firebaseData.map((content)=>{
+        firebaseData? (firebaseData.map((content)=>{
           return (
-            <div className='admin-data'>
-             <p>{content.SportName}   </p>
-             <p>{content.Area}    </p>
-             <p>{content.City}    </p>
-             <p>{content.SportCategory}</p>
-             <button>Edit </button>
-             <button onClick={()=>handleDelete(content.id)}>Delete</button>
+            <div>
+              <div className='admin-data'>
+              <p>{content.SportName}   </p>
+              <p>{content.Area}    </p>
+              <p>{content.City}    </p>
+              <p>{content.SportCategory}</p>
+              <button onClick={()=>handleUpdate(content.id)}>Update*</button>
+              <button onClick={()=>handleDelete(content.id)}>Delete</button>
+              </div>
             </div>
           )
         }))
