@@ -18,7 +18,6 @@ function ManageSports () {
   const newItem ={[event.target.name] :(event.target.value)}
   setData({...data, ...newItem})
   }
-  console.log(data.sportEvent)
 
   //adding input data to firbase
   const collectionRef = collection(database, "userSports")
@@ -76,8 +75,6 @@ const deleteData=(id)=>{
     alert(err.message)
   })
 }
-
-console.log(array)
   return (
     <div>
       <h4 className="managesport">Manage Sports</h4>
