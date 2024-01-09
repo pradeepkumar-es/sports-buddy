@@ -6,12 +6,26 @@ import {collection,
         updateDoc,
         doc,
         onSnapshot,
-        deleteDoc
+        deleteDoc,
+        query, where
        } from  "firebase/firestore"
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 function ManageSports () {
   const [data, setData] = useState({})  //defining state variable data to store input data
   const [array, setArray] = useState([]) //defining state variable array to store data received from firebase
+  const [user, setUser] =useState(null);
+ 
+  const auth= getAuth(); //firebase
+  useEffect(()=>{
+    onAuthStateChanged(auth, (user)=>{
+    if(user){
+        setUser(user)
+        getDetails(user)
+    }else {
+        setUser(null)
+    }
+    })
+   },[auth])
 
   //handling sport Name input data and storing it to data object
   const handleInput=(event)=>{
@@ -21,9 +35,10 @@ function ManageSports () {
 
   //adding input data to firbase
   const collectionRef = collection(database, "userSports")
-  const handleAdd=()=>{
+  const handleAddSport=(userdata)=>{
     addDoc(collectionRef, {
-      sportEvent: data.sportEvent
+      sportEvent: data.sportEvent,
+      userId :userdata.uid
     })
     .then(()=>{
       alert("Sport added successfully")
@@ -33,13 +48,17 @@ function ManageSports () {
     })
   }
 
+  const handleAdd=()=>{
+ handleAddSport(user)
+  }
+
   //getting Data from firebase
   const getDetails = async(userdata)=>{
     const collectionRef= collection(database, 'userSports')
-    // const ageQuery = query(collectionRef, where("userId", "==" , userdata.uid))
+    const ageQuery = query(collectionRef, where("userId", "==" , userdata.uid))
 
                 //for real time update
-                 onSnapshot(collectionRef, (response)=>{  //for selected response
+                 onSnapshot(ageQuery, (response)=>{  //for selected response
                         setArray(
                                     response.docs.map((item)=>{
                                         return {...item.data(), id: item.id};
